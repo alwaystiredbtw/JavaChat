@@ -16,7 +16,7 @@ public class OrganizarCliente implements Runnable {
             this.bufferedWriter = new BufferedWriter (new OutputStreamWriter(socket.getOutputStream()));
             this.clienteApelido = bufferedReader.readLine();
             listaClientes.add(this);
-            broadcast("SERVIDOR:" + clienteApelido + "entrou no chat!");
+            broadcast("SERVIDOR: " + clienteApelido + " entrou no chat!");
         }catch (IOException e){
             closeEverything(socket,bufferedReader,bufferedWriter);
         }
@@ -27,15 +27,54 @@ public class OrganizarCliente implements Runnable {
 
     @Override
     public void run() {
-        String mensagemCliente;
+
         while (socket.isConnected()){
             try {
-                mensagemCliente = bufferedReader.readLine();
-                broadcast(mensagemCliente);
+                String mensagemCliente = bufferedReader.readLine();
+                if(mensagemCliente.contains("/sair")){
+                    broadcast(mensagemCliente);
+                    removerOrganizarCliente();
+                    break;
+                }
+                else if(mensagemCliente.startsWith("/changenick")){
+                    String[] partes = mensagemCliente.split(" ");
+                    String newname = partes[2];
+                    broadcast("SERVIDOR: " + this.clienteApelido + "alterou o apelido para: " + newname);
+                    this.clienteApelido = newname;
+                    bufferedWriter.write("Apelido alterado, " + newname + ".");
+
+                }
+                else if(mensagemCliente.startsWith("/dm")){
+                    String[] parts = mensagemCliente.split(" ");
+                    String mensagemDM = parts[2];
+                    String apelido = parts[3];
+                    unicast(apelido,mensagemDM);
+
+                }
+                else if (mensagemCliente.equals("/listar")){
+                    for(OrganizarCliente clientes : listaClientes){
+                        broadcast(clientes.clienteApelido);
+                    }
+                }
+                else{
+                    broadcast(mensagemCliente);
+                }
 
             }catch (IOException e){
-                closeEverything(socket,bufferedReader,bufferedWriter);
+                removerOrganizarCliente();
                 break;
+            }
+        }
+    }
+
+
+
+    public void unicast(String apelido, String mensagem) throws IOException {
+        for(OrganizarCliente organizarCliente:listaClientes){
+            if(organizarCliente.clienteApelido.equals(apelido)){
+                organizarCliente.bufferedWriter.write(mensagem);
+                organizarCliente.bufferedWriter.newLine();
+                organizarCliente.bufferedWriter.flush();
             }
         }
     }
@@ -57,7 +96,7 @@ public class OrganizarCliente implements Runnable {
 
     public void removerOrganizarCliente(){
         listaClientes.remove(this);
-        broadcast("SERVER:" + clienteApelido + "saiu do chat!");
+        broadcast("SERVIDOR:" + clienteApelido + "saiu do chat!");
 
     }
 

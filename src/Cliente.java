@@ -1,6 +1,8 @@
 import java.io.*;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class Cliente {
@@ -10,7 +12,7 @@ private BufferedReader bufferedReader;
 private BufferedWriter bufferedWriter;
 private String clienteApelido;
 
-public Cliente(Socket socket,String clienteApelido){
+public Cliente(Socket socket,String clienteApelido) throws UnknownHostException {
     try {
         this.socket = socket;
         this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -77,10 +79,11 @@ public void closeEverything(Socket socket,BufferedReader bufferedReader,Buffered
 }
 
     public static void main(String[] args) throws IOException {
+        InetAddress adress = InetAddress.getByName("localhost");
         Scanner sc = new Scanner(System.in);
         System.out.println("Insira seu nome de usuario:");
         String apelidoUsuario = sc.nextLine();
-        Socket socket = new Socket("localhost",4899);
+        Socket socket = new Socket(adress,4899);
         Cliente cliente = new Cliente(socket,apelidoUsuario);
         cliente.receberMensagem();
         cliente.enviarMensagem();
