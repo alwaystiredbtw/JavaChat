@@ -10,6 +10,7 @@ public class OrganizarCliente implements Runnable {
     private BufferedWriter bufferedWriter;
     private String clienteApelido;
 
+
     public OrganizarCliente(Socket socket){
         try{
             this.socket = socket;
@@ -22,8 +23,6 @@ public class OrganizarCliente implements Runnable {
             closeEverything(socket,bufferedReader,bufferedWriter);
         }
     }
-
-
 
 
     @Override
@@ -47,9 +46,8 @@ public class OrganizarCliente implements Runnable {
                 else if (mensagemCliente.contains("$listar")){
                     broadcast(clienteApelido + " Solicitou lista de usuarios:");{
                         for(OrganizarCliente organizarCliente:listaClientes){
-                                organizarCliente.bufferedWriter.write(clienteApelido);
-                                organizarCliente.bufferedWriter.newLine();
-                                organizarCliente.bufferedWriter.flush();
+                            for (OrganizarCliente clientes:listaClientes)
+                                clientes.bufferedWriter.write(clientes.clienteApelido);
                             }
                     }
                 }
