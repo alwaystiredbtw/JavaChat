@@ -39,8 +39,8 @@ public class OrganizarCliente implements Runnable {
                 else if(mensagemCliente.contains("$changenick")){
                     String[] partes = mensagemCliente.split(" ");
                     String newname = partes[1];
-                    broadcast("SERVIDOR: " + this.clienteApelido + "alterou o apelido para: " + newname);
-                    this.clienteApelido = newname;
+                    broadcast("SERVIDOR: " + clienteApelido + "alterou o apelido para: " + newname);
+                    clienteApelido = newname;
                     bufferedWriter.write("Apelido alterado, " + newname + ".");
 
                 }
@@ -95,7 +95,7 @@ public class OrganizarCliente implements Runnable {
 
     public void removerOrganizarCliente(){
         listaClientes.remove(this);
-        broadcast("SERVIDOR:" + clienteApelido + "saiu do chat!");
+        broadcast("SERVIDOR: " + clienteApelido + "saiu do chat!");
 
     }
 
