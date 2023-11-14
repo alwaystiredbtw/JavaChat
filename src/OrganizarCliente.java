@@ -38,7 +38,7 @@ public class OrganizarCliente implements Runnable {
                 }
                 else if(mensagemCliente.contains("$changenick")){
                     String[] partes = mensagemCliente.split(" ");
-                    String newname = partes[2];
+                    String newname = partes[1];
                     broadcast("SERVIDOR: " + this.clienteApelido + "alterou o apelido para: " + newname);
                     this.clienteApelido = newname;
                     bufferedWriter.write("Apelido alterado, " + newname + ".");
