@@ -39,11 +39,12 @@ public void enviarMensagem(){
                 clienteApelido = newname;
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
-
             }
-            bufferedWriter.write(clienteApelido + ":" + mensagem);
-            bufferedWriter.newLine();
-            bufferedWriter.flush();
+            else {
+                bufferedWriter.write(clienteApelido + ":" + mensagem);
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
 
         }
     }catch (IOException e){
