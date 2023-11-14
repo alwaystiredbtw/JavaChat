@@ -45,9 +45,12 @@ public class OrganizarCliente implements Runnable {
 
                 }
                 else if (mensagemCliente.contains("$listar")){
-                    for(OrganizarCliente clientes : listaClientes){
-                        bufferedWriter.write(clienteApelido);
-
+                    broadcast(clienteApelido + " Solicitou lista de usuarios:");{
+                        for(OrganizarCliente organizarCliente:listaClientes){
+                                organizarCliente.bufferedWriter.write(clienteApelido);
+                                organizarCliente.bufferedWriter.newLine();
+                                organizarCliente.bufferedWriter.flush();
+                            }
                     }
                 }
                 else{
