@@ -36,14 +36,7 @@ public class OrganizarCliente implements Runnable {
                     removerOrganizarCliente();
                     break;
                 }
-                else if(mensagemCliente.contains("$changenick")){
-                    String[] partes = mensagemCliente.split(" ");
-                    String newname = partes[1];
-                    broadcast("SERVIDOR: " + clienteApelido + "alterou o apelido para: " + newname);
-                    clienteApelido = newname;
-                    System.out.println("Mudou de nome ! ");
 
-                }
                 else if(mensagemCliente.contains("$dm")){
                     String[] parts = mensagemCliente.split(" ");
                     String mensagemDM = parts[1];

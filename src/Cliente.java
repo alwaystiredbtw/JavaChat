@@ -32,6 +32,15 @@ public void enviarMensagem(){
         Scanner sc = new Scanner(System.in);
         while (socket.isConnected()){
             String mensagem = sc.nextLine();
+            if(mensagem.contains("$changenick")){
+                String[] partes = mensagem.split(" ");
+                String newname = partes[1];
+                bufferedWriter.write("SERVIDOR: " + clienteApelido + "alterou o apelido para: " + newname);
+                clienteApelido = newname;
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+
+            }
             bufferedWriter.write(clienteApelido + ":" + mensagem);
             bufferedWriter.newLine();
             bufferedWriter.flush();
