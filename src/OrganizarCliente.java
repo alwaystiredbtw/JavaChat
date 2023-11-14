@@ -41,13 +41,13 @@ public class OrganizarCliente implements Runnable {
                     String newname = partes[1];
                     broadcast("SERVIDOR: " + clienteApelido + "alterou o apelido para: " + newname);
                     clienteApelido = newname;
-                    bufferedWriter.write("Apelido alterado, " + newname + ".");
+                    System.out.println("Mudou de nome ! ");
 
                 }
                 else if(mensagemCliente.contains("$dm")){
                     String[] parts = mensagemCliente.split(" ");
-                    String mensagemDM = parts[2];
-                    String apelido = parts[3];
+                    String mensagemDM = parts[1];
+                    String apelido = parts[2];
                     unicast(apelido,mensagemDM);
 
                 }
