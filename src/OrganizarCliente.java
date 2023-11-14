@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class OrganizarCliente implements Runnable {
     static ArrayList<OrganizarCliente> listaClientes = new ArrayList<>();
@@ -31,12 +32,11 @@ public class OrganizarCliente implements Runnable {
         while (socket.isConnected()){
             try {
                 String mensagemCliente = bufferedReader.readLine();
-                if(mensagemCliente.contains("/sair")){
-                    broadcast(mensagemCliente);
+                if(mensagemCliente.contains("$sair")){
                     removerOrganizarCliente();
                     break;
                 }
-                else if(mensagemCliente.startsWith("/changenick")){
+                else if(mensagemCliente.contains("$changenick")){
                     String[] partes = mensagemCliente.split(" ");
                     String newname = partes[2];
                     broadcast("SERVIDOR: " + this.clienteApelido + "alterou o apelido para: " + newname);
@@ -44,16 +44,17 @@ public class OrganizarCliente implements Runnable {
                     bufferedWriter.write("Apelido alterado, " + newname + ".");
 
                 }
-                else if(mensagemCliente.startsWith("/dm")){
+                else if(mensagemCliente.contains("$dm")){
                     String[] parts = mensagemCliente.split(" ");
                     String mensagemDM = parts[2];
                     String apelido = parts[3];
                     unicast(apelido,mensagemDM);
 
                 }
-                else if (mensagemCliente.equals("/listar")){
+                else if (mensagemCliente.contains("$listar")){
                     for(OrganizarCliente clientes : listaClientes){
-                        broadcast(clientes.clienteApelido);
+                        bufferedWriter.write(clienteApelido);
+
                     }
                 }
                 else{
@@ -66,8 +67,6 @@ public class OrganizarCliente implements Runnable {
             }
         }
     }
-
-
 
     public void unicast(String apelido, String mensagem) throws IOException {
         for(OrganizarCliente organizarCliente:listaClientes){

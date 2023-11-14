@@ -79,7 +79,7 @@ public void closeEverything(Socket socket,BufferedReader bufferedReader,Buffered
 }
 
     public static void main(String[] args) throws IOException {
-        InetAddress adress = InetAddress.getByName("localhost");
+        InetAddress adress = InetAddress.getByName("192.168.18.48");
         Scanner sc = new Scanner(System.in);
         System.out.println("Insira seu nome de usuario:");
         String apelidoUsuario = sc.nextLine();

@@ -45,7 +45,7 @@ public void closeServerSocket(){
 
     public static void main(String[] args) throws IOException {
 
-      InetAddress address = InetAddress.getByName("localhost");
+      InetAddress address = InetAddress.getByName("192.168.18.48");
 
       ServerSocket serverSocket = new ServerSocket(4899,50,address);
       Servidor servidor = new Servidor(serverSocket);
