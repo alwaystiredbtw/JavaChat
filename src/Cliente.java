@@ -12,7 +12,11 @@ private BufferedReader bufferedReader;
 private BufferedWriter bufferedWriter;
 private String clienteApelido;
 
-public Cliente(Socket socket,String clienteApelido) throws UnknownHostException {
+    public void setClienteApelido(String clienteApelido) {
+        this.clienteApelido = clienteApelido;
+    }
+
+    public Cliente(Socket socket, String clienteApelido) throws UnknownHostException {
     try {
         this.socket = socket;
         this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -35,8 +39,8 @@ public void enviarMensagem(){
             if(mensagem.contains("$changenick")){
                 String[] partes = mensagem.split(" ");
                 String newname = partes[1];
-                bufferedWriter.write("SERVIDOR: " + clienteApelido + "alterou o apelido para: " + newname);
-                clienteApelido = newname;
+                bufferedWriter.write("SERVIDOR: " + clienteApelido + "  o apelido para: " + newname);
+                setClienteApelido(newname);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
             }

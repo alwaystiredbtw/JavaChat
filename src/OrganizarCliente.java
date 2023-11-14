@@ -38,8 +38,8 @@ public class OrganizarCliente implements Runnable {
 
                 else if(mensagemCliente.contains("$dm")){
                     String[] parts = mensagemCliente.split(" ");
-                    String mensagemDM = parts[1];
-                    String apelido = parts[2];
+                    String mensagemDM = parts[2];
+                    String apelido = parts[1];
                     unicast(apelido,mensagemDM);
 
                 }
